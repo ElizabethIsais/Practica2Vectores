@@ -1,0 +1,101 @@
+import scala.util.Random
+import scala.collection.mutable.ArrayBuffer
+
+object EjercicioVectores2 {
+  
+  def main(args: Array[String]): Unit = {
+    
+    val horaTemperatura = new Array[Int](48)
+    val horaTemp25 = ArrayBuffer[Int]()
+    
+    registroHoras(horaTemperatura)
+    
+    println("Registro de Temperaturas del día: ")
+    mostrarVector(horaTemperatura)
+    println()
+    println()
+    mostrarTemperaturaIgual25(horaTemperatura)
+    println()
+    almacenarTemperaturaIgual25(horaTemperatura, horaTemp25)
+    mostrarVector(horaTemp25)
+    println()
+    println("Promedio de Horas, con registro de 25°: " + sacarPromedio(horaTemp25))
+    
+    
+  }
+  
+  def registroHoras(vector: Array[Int]): Array[Int] = {
+    
+    var cont = 0
+    var r = scala.util.Random
+    
+    for(i <- 0 until vector.length){
+          if(i % 2 == 0){
+             vector(i) = cont
+             cont = cont + 1
+          }
+          else{
+             vector(i) = r.nextInt(50)
+          }
+    }    
+    vector
+  }
+     
+  
+  def mostrarVector(vector: Array[Int]): Unit = {
+    for(e <- vector){
+        print(e + ", ")
+    }
+  }
+  
+  def mostrarVector(vector: ArrayBuffer[Int]): Unit = {
+    println("Registro de Temperaturas de 25°: ")
+    for(e <- vector){
+        print(e + ", ")
+    }
+  }
+  
+  
+  
+  def mostrarTemperaturaIgual25(vector: Array[Int]): Unit = {
+    for(i <- 0 until vector.length){
+          if(i % 2 != 0){
+             if(vector(i) == 25){
+               println("Temperatura: " + vector(i) + " Hora: " + vector(i-1))
+             }
+          }      
+    }  
+  }
+  
+  def almacenarTemperaturaIgual25(vector: Array[Int], horaTemp25: ArrayBuffer[Int]): ArrayBuffer[Int]= {
+    
+    for(i <- 0 until vector.length){
+        if(vector(i) == 25){
+          horaTemp25 += vector(i-1)
+          horaTemp25+= vector(i)
+        }  
+    }
+    horaTemp25
+  }
+  
+  def sacarPromedio(vector: ArrayBuffer[Int]): Double = {
+    var prom = 0.0
+    var cont = 0
+    
+    for(i <- 0 until vector.length){
+        if(i % 2 == 0){
+          prom = prom + vector(i)
+          cont = cont + 1
+        }  
+    }
+    
+    if(prom == 0){
+      return 0
+    }
+    else{
+      prom = prom/cont
+      prom
+    }
+  }
+  
+}
